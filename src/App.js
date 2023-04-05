@@ -1,21 +1,21 @@
 import './App.css';
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import WalletDashboard from './App/pages/WalletDashboard';
 import Login from './App/pages/Login';
+import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" index element={<WalletDashboard />} />
+        <Route exact path='/' element={<Navigate to={'/dashboard'}/>} />
+        <Route exact path='/dashboard' element={<PrivateRoute/>}>
+            <Route exact path='/dashboard' element={<WalletDashboard/>}/>
+        </Route>
         <Route path='/login' element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
 
 export default App;
